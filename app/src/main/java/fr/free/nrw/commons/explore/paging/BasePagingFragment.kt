@@ -5,8 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -19,6 +18,7 @@ import fr.free.nrw.commons.databinding.FragmentSearchPaginatedBinding
 import fr.free.nrw.commons.di.CommonsDaggerSupportFragment
 import fr.free.nrw.commons.utils.ViewUtil
 
+
 abstract class BasePagingFragment<T> : CommonsDaggerSupportFragment(),
     PagingContract.View<T> {
 
@@ -29,21 +29,13 @@ abstract class BasePagingFragment<T> : CommonsDaggerSupportFragment(),
     private val mergeAdapter by lazy { MergeAdapter(pagedListAdapter, loadingAdapter) }
     private var searchResults: LiveData<PagedList<T>>? = null
 
-    private var _binding: FragmentSearchPaginatedBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchPaginatedBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private var mybinding : FragmentSearchPaginatedBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.paginatedSearchResultsList.apply {
+        val binding = FragmentSearchPaginatedBinding.bind(view)
+        mybinding = binding
+        mybinding!!.paginatedSearchResultsList.apply {
             layoutManager = GridLayoutManager(context, if (isPortrait) 1 else 2)
             adapter = mergeAdapter
         }
@@ -58,7 +50,7 @@ abstract class BasePagingFragment<T> : CommonsDaggerSupportFragment(),
      */
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        binding.paginatedSearchResultsList.apply {
+        mybinding!!.paginatedSearchResultsList.apply {
             layoutManager = GridLayoutManager(context, if (isPortrait) 1 else 2)
         }
     }
@@ -82,15 +74,15 @@ abstract class BasePagingFragment<T> : CommonsDaggerSupportFragment(),
     }
 
     override fun hideInitialLoadProgress() {
-        binding.paginatedSearchInitialLoadProgress.visibility = GONE
+        mybinding!!.paginatedSearchInitialLoadProgress.visibility = GONE
     }
 
     override fun showInitialLoadInProgress() {
-        binding.paginatedSearchInitialLoadProgress.visibility = VISIBLE
+        mybinding!!.paginatedSearchInitialLoadProgress.visibility = VISIBLE
     }
 
     override fun showSnackbar() {
-        ViewUtil.showShortSnackbar(binding.paginatedSearchResultsList, errorTextId)
+        ViewUtil.showShortSnackbar(mybinding!!.paginatedSearchResultsList, errorTextId)
     }
 
     fun onQueryUpdated(query: String) {
@@ -98,14 +90,14 @@ abstract class BasePagingFragment<T> : CommonsDaggerSupportFragment(),
     }
 
     override fun showEmptyText(query: String) {
-        binding.contentNotFound.text = getEmptyText(query)
-        binding.contentNotFound.visibility = VISIBLE
+        mybinding!!.contentNotFound.text = getEmptyText(query)
+        mybinding!!.contentNotFound.visibility = VISIBLE
     }
 
     abstract fun getEmptyText(query: String): String
 
     override fun hideEmptyText() {
-        binding.contentNotFound.visibility = GONE
+        mybinding!!.contentNotFound.visibility = GONE
     }
 }
 
