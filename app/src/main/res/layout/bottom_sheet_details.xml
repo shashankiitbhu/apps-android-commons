@@ -90,6 +90,34 @@
         </LinearLayout>
 
         <LinearLayout
+          android:id="@+id/reportButton"
+          android:layout_width="@dimen/dimen_0"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:padding="@dimen/standard_gap"
+          android:clickable="true"
+          android:orientation="vertical"
+          android:background="@drawable/button_background_selector"
+          >
+            <ImageView
+              android:id="@+id/reportButtonImage"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              app:srcCompat="@drawable/ic_custom_map_marker_purple"
+              android:tint="?attr/rowButtonColor"/>
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/reportButtonImageTezxt"
+              android:paddingTop="@dimen/activity_margin_horizontal"
+              android:layout_gravity="center_horizontal"
+              android:text="REPORT"
+              android:visibility="gone"
+              />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/directionsButton"
             android:layout_width="@dimen/dimen_0"
             android:layout_height="wrap_content"
@@ -98,6 +126,7 @@
             android:clickable="true"
             android:background="@drawable/button_background_selector"
             android:orientation="vertical"
+
             >
             <ImageView
                 android:layout_width="wrap_content"

@@ -172,6 +172,9 @@ public class NearbyParentFragment extends CommonsDaggerSupportFragment
     ImageView bookmarkButtonImage;
     @BindView(R.id.bookmarkButton)
     LinearLayout bookmarkButton;
+
+    @BindView(R.id.reportButton)
+    LinearLayout reportButton;
     @BindView(R.id.wikipediaButton)
     LinearLayout wikipediaButton;
     @BindView(R.id.wikidataButton)
@@ -2020,6 +2023,17 @@ public class NearbyParentFragment extends CommonsDaggerSupportFragment
         });
         bookmarkButton.setOnLongClickListener(view -> {
             Toast.makeText(getContext(), R.string.menu_bookmark, Toast.LENGTH_SHORT).show();
+            return true;
+        });
+
+        reportButton.setOnClickListener(view -> {
+            if (selectedPlace != null) {
+                Utils.handleGeoCoordinates(getActivity(), selectedPlace.getLocation());
+            }
+        });
+
+        reportButton.setOnLongClickListener(view -> {
+            Toast.makeText(getContext(), "Report this Item", Toast.LENGTH_SHORT).show();
             return true;
         });
 
